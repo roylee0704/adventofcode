@@ -21,18 +21,16 @@ func main() {
 }
 
 type problem struct {
-	input io.ReadSeeker
 	words []string
 }
 
-func newProblem(input io.ReadSeeker) *problem {
+func newProblem(input io.Reader) *problem {
 	s := bufio.NewScanner(input)
 	var words []string
 	for s.Scan() {
 		words = append(words, s.Text())
 	}
 	return &problem{
-		input: input,
 		words: words,
 	}
 }

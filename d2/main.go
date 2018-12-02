@@ -36,8 +36,7 @@ func newProblem(r io.Reader) *problem {
 }
 
 func (p *problem) CheckSum() int {
-	var twos int
-	var threes int
+	twos, threes := 0, 0
 	for _, word := range p.words {
 		charFreq := make(map[int]int)
 		for _, c := range word {

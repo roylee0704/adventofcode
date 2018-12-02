@@ -51,7 +51,6 @@ func (p *problem) FindCheckSum() int {
 		if hasFreq(charFreq, 3) {
 			threes++
 		}
-
 	}
 	return twos * threes
 }
@@ -66,29 +65,20 @@ func hasFreq(charFreq map[int]int, freq int) bool {
 }
 
 func (p *problem) FindMatchedString() string {
-	p.input.Seek(0, 0)
-	s := bufio.NewScanner(p.input)
-
-	var data []string
-	for s.Scan() {
-		data = append(data, s.Text())
-	}
-
-	n := len(data)
-	var currentIdx = 0
-
+	n := len(p.words)
+	var head = 0
 	for {
-		if currentIdx+1 >= n {
+		if head+1 >= n {
 			break
 		}
 
-		for k := currentIdx + 1; k < n; k++ {
-			pos, match := distance(data[currentIdx], data[k])
+		for k := head + 1; k < n; k++ {
+			pos, match := distance(p.words[head], p.words[k])
 			if match {
-				return trimCharacter(data[currentIdx], pos)
+				return trimCharacter(p.words[head], pos)
 			}
 		}
-		currentIdx++
+		head++
 	}
 	return ""
 }

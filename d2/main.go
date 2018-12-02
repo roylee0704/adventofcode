@@ -16,8 +16,8 @@ func main() {
 	}
 
 	p := newProblem(f)
-	fmt.Println(p.FindCheckSum())
-	fmt.Println(p.FindCommon())
+	fmt.Println(p.CheckSum())
+	fmt.Println(p.Common())
 }
 
 type problem struct {
@@ -35,7 +35,7 @@ func newProblem(r io.Reader) *problem {
 	}
 }
 
-func (p *problem) FindCheckSum() int {
+func (p *problem) CheckSum() int {
 	var twos int
 	var threes int
 	for _, word := range p.words {
@@ -63,7 +63,7 @@ func hasFreq(charFreq map[int]int, freq int) bool {
 }
 
 // O(k * N) instead of O(k * N^2), where k is the length of string
-func (p *problem) FindCommon() string {
+func (p *problem) Common() string {
 	seen := make(map[string]bool)
 	for _, word := range p.words {
 		for i := range word {

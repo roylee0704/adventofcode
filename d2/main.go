@@ -21,27 +21,28 @@ func main() {
 }
 
 type problem struct {
-	freq  map[int]bool
 	input io.ReadSeeker
-	sum   int
+	words []string
 }
 
 func newProblem(input io.ReadSeeker) *problem {
+	s := bufio.NewScanner(input)
+	var words []string
+	for s.Scan() {
+		words = append(words, s.Text())
+	}
 	return &problem{
 		input: input,
-		freq:  make(map[int]bool),
+		words: words,
 	}
 }
 
 func (p *problem) FindCheckSum() int {
-	p.input.Seek(0, 0)
-	s := bufio.NewScanner(p.input)
-
 	var twos int
 	var threes int
-	for s.Scan() {
+	for _, word := range p.words {
 		charFreq := make(map[int]int)
-		for _, c := range s.Text() {
+		for _, c := range word {
 			charFreq[int(c)]++
 		}
 		if hasFreq(charFreq, 2) {
@@ -50,6 +51,7 @@ func (p *problem) FindCheckSum() int {
 		if hasFreq(charFreq, 3) {
 			threes++
 		}
+
 	}
 	return twos * threes
 }

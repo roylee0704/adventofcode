@@ -14,10 +14,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	p := newProblem(f)
 	fmt.Println(p.FindCheckSum())
 	fmt.Println(p.FindMatchedString())
-
 }
 
 type problem struct {
@@ -78,28 +78,6 @@ func (p *problem) FindMatchedString() string {
 		}
 	}
 	return ""
-}
-
-// distance assume a and b are of same length
-func distance(a, b string) (pos int, match bool) {
-	if len([]rune(a)) != len([]rune(b)) {
-		return -1, false
-	}
-
-	n := len([]rune(a))
-	var unmatchedCount int
-	var invalidPos int
-	for i := 0; i < n; i++ {
-		if a[i] != b[i] {
-			unmatchedCount++
-			invalidPos = i
-		}
-		if unmatchedCount > 1 {
-			return -1, false
-		}
-	}
-
-	return invalidPos, true
 }
 
 func removeCharAt(pos int, a string) string {

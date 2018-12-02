@@ -24,8 +24,8 @@ type problem struct {
 	words []string
 }
 
-func newProblem(input io.Reader) *problem {
-	s := bufio.NewScanner(input)
+func newProblem(r io.Reader) *problem {
+	s := bufio.NewScanner(r)
 	var words []string
 	for s.Scan() {
 		words = append(words, s.Text())

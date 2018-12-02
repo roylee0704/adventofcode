@@ -46,15 +46,15 @@ func (p *problem) Sum() int {
 }
 
 func (p *problem) DupFreq() int {
-	freq := make(map[int]bool)
-	accum := 0
+	seen := make(map[int]bool)
+	freq := 0
 	for {
 		for _, num := range p.input {
-			accum += num
-			if freq[accum] {
-				return accum
+			freq += num
+			if seen[freq] {
+				return freq
 			}
-			freq[accum] = true
+			seen[freq] = true
 		}
 	}
 }

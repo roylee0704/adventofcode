@@ -64,21 +64,18 @@ func hasFreq(charFreq map[int]int, freq int) bool {
 	return false
 }
 
+// O(k * N) instead of O(k * N^2), where k is the length of string
 func (p *problem) FindMatchedString() string {
-	n := len(p.words)
-	var head = 0
-	for {
-		if head+1 >= n {
-			break
-		}
-
-		for k := head + 1; k < n; k++ {
-			pos, match := distance(p.words[head], p.words[k])
-			if match {
-				return trimCharacter(p.words[head], pos)
+	seen := make(map[string]bool)
+	for _, word := range p.words {
+		for i := range word {
+			token := removeCharAt(i, word)
+			key := fmt.Sprintf("%d-%s", i, token)
+			if seen[key] {
+				return token
 			}
+			seen[key] = true
 		}
-		head++
 	}
 	return ""
 }
@@ -105,13 +102,13 @@ func distance(a, b string) (pos int, match bool) {
 	return invalidPos, true
 }
 
-func trimCharacter(a string, pos int) string {
+func removeCharAt(pos int, a string) string {
 	n := len([]rune(a))
 	if pos == 0 {
-		return a[pos+1:]
+		return a[1:]
 	}
-	if pos == n {
-		return a[0:pos]
+	if pos == n-1 {
+		return a[0 : n-1]
 	}
 
 	return a[:pos] + a[pos+1:]

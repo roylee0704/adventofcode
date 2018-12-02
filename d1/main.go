@@ -16,53 +16,45 @@ func main() {
 	}
 
 	p := newProblem(f)
-	fmt.Println("part1:", p.FindSum())
-	fmt.Println("part2:", p.FindDuplicatedFrequency())
+	fmt.Println(p.FindSum())
+	fmt.Println(p.FindDuplicatedFrequency())
 }
 
 type problem struct {
-	freq  map[int]bool
-	input io.ReadSeeker
-	sum   int
+	nums []int
 }
 
-func newProblem(input io.ReadSeeker) *problem {
+func newProblem(r io.Reader) *problem {
+	var nums []int
+	s := bufio.NewScanner(r)
+	for s.Scan() {
+		num := 0
+		fmt.Sscanf(s.Text(), "%d", &num)
+		nums = append(nums, num)
+	}
 	return &problem{
-		input: input,
-		freq:  make(map[int]bool),
+		nums: nums,
 	}
 }
 
 func (p *problem) FindSum() int {
-	p.reset()
-	p.input.Seek(0, 0)
-	s := bufio.NewScanner(p.input)
-	for s.Scan() {
-		i := 0
-		fmt.Sscanf(s.Text(), "%d", &i)
-		p.sum += i
+	sum := 0
+	for _, num := range p.nums {
+		sum += num
 	}
-	return p.sum
+	return sum
 }
 
 func (p *problem) FindDuplicatedFrequency() int {
-	p.reset()
+	freq := make(map[int]bool)
+	accum := 0
 	for {
-		p.input.Seek(0, 0)
-		s := bufio.NewScanner(p.input)
-		for s.Scan() {
-			i := 0
-			fmt.Sscanf(s.Text(), "%d", &i)
-			p.sum += i
-			if p.freq[p.sum] {
-				return p.sum
+		for _, num := range p.nums {
+			accum += num
+			if freq[accum] {
+				return accum
 			}
-			p.freq[p.sum] = true
+			freq[accum] = true
 		}
 	}
-}
-
-func (p *problem) reset() {
-	p.sum = 0
-	p.freq = make(map[int]bool)
 }

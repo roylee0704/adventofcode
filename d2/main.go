@@ -17,7 +17,7 @@ func main() {
 
 	p := newProblem(f)
 	fmt.Println(p.FindCheckSum())
-	fmt.Println(p.FindMatchedString())
+	fmt.Println(p.FindCommon())
 }
 
 type problem struct {
@@ -63,7 +63,7 @@ func hasFreq(charFreq map[int]int, freq int) bool {
 }
 
 // O(k * N) instead of O(k * N^2), where k is the length of string
-func (p *problem) FindMatchedString() string {
+func (p *problem) FindCommon() string {
 	seen := make(map[string]bool)
 	for _, word := range p.words {
 		for i := range word {

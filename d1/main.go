@@ -21,25 +21,25 @@ func main() {
 }
 
 type problem struct {
-	nums []int
+	input []int
 }
 
 func newProblem(r io.Reader) *problem {
-	var nums []int
+	var input []int
 	s := bufio.NewScanner(r)
 	for s.Scan() {
 		num := 0
 		fmt.Sscanf(s.Text(), "%d", &num)
-		nums = append(nums, num)
+		input = append(input, num)
 	}
 	return &problem{
-		nums: nums,
+		input: input,
 	}
 }
 
 func (p *problem) Sum() int {
 	sum := 0
-	for _, num := range p.nums {
+	for _, num := range p.input {
 		sum += num
 	}
 	return sum
@@ -49,7 +49,7 @@ func (p *problem) DupFreq() int {
 	freq := make(map[int]bool)
 	accum := 0
 	for {
-		for _, num := range p.nums {
+		for _, num := range p.input {
 			accum += num
 			if freq[accum] {
 				return accum

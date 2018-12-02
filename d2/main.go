@@ -15,9 +15,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// only works w/ ascii input
 	p := newProblem(f)
 	fmt.Println(p.CheckSum())
+
+	// only works /w ascii
 	fmt.Println(p.Common())
 }
 
@@ -39,22 +40,22 @@ func newProblem(r io.Reader) *problem {
 func (p *problem) CheckSum() int {
 	twos, threes := 0, 0
 	for _, word := range p.words {
-		charFreq := make(map[int]int)
-		for _, c := range word {
-			charFreq[int(c)]++
+		count := make(map[rune]int)
+		for _, r := range word {
+			count[r]++
 		}
-		if hasFreq(charFreq, 2) {
+		if hasFreq(count, 2) {
 			twos++
 		}
-		if hasFreq(charFreq, 3) {
+		if hasFreq(count, 3) {
 			threes++
 		}
 	}
 	return twos * threes
 }
 
-func hasFreq(charFreq map[int]int, freq int) bool {
-	for _, v := range charFreq {
+func hasFreq(count map[rune]int, freq int) bool {
+	for _, v := range count {
 		if v == freq {
 			return true
 		}

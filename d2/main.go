@@ -16,7 +16,7 @@ func main() {
 	}
 	p := newProblem(f)
 	fmt.Println(p.FindCheckSum())
-	fmt.Println(p.FindMacthedString())
+	fmt.Println(p.FindMatchedString())
 
 }
 
@@ -41,10 +41,8 @@ func (p *problem) FindCheckSum() int {
 	var checksumPartB int
 
 	for s.Scan() {
-		str := s.Text()
-
 		frequency := make(map[int]int)
-		for _, c := range str {
+		for _, c := range s.Text() {
 			frequency[int(c)]++
 		}
 
@@ -65,17 +63,16 @@ func (p *problem) FindCheckSum() int {
 	return checksumPartB * checksumPartA
 }
 
-func (p *problem) FindMacthedString() string {
+func (p *problem) FindMatchedString() string {
 	p.input.Seek(0, 0)
 	s := bufio.NewScanner(p.input)
 
-	var buffer []string
+	var data []string
 	for s.Scan() {
-		str := s.Text()
-		buffer = append(buffer, str)
+		data = append(data, s.Text())
 	}
 
-	n := len(buffer)
+	n := len(data)
 	var currentIdx = 0
 
 	for {
@@ -84,9 +81,9 @@ func (p *problem) FindMacthedString() string {
 		}
 
 		for k := currentIdx + 1; k < n; k++ {
-			pos, match := distance(buffer[currentIdx], buffer[k])
+			pos, match := distance(data[currentIdx], data[k])
 			if match {
-				return trimCharacter(buffer[currentIdx], pos)
+				return trimCharacter(data[currentIdx], pos)
 			}
 		}
 		currentIdx++

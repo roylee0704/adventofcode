@@ -79,7 +79,7 @@ func (p *problem) FindMatchedString() string {
 }
 
 func removeCharAt(pos int, a string) string {
-	n := len([]rune(a))
+	n := len([]byte(a))
 	if pos == 0 {
 		return a[1:]
 	}

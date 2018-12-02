@@ -16,8 +16,8 @@ func main() {
 	}
 
 	p := newProblem(f)
-	fmt.Println(p.FindSum())
-	fmt.Println(p.FindDuplicatedFrequency())
+	fmt.Println(p.Sum())
+	fmt.Println(p.DupFreq())
 }
 
 type problem struct {
@@ -37,7 +37,7 @@ func newProblem(r io.Reader) *problem {
 	}
 }
 
-func (p *problem) FindSum() int {
+func (p *problem) Sum() int {
 	sum := 0
 	for _, num := range p.nums {
 		sum += num
@@ -45,7 +45,7 @@ func (p *problem) FindSum() int {
 	return sum
 }
 
-func (p *problem) FindDuplicatedFrequency() int {
+func (p *problem) DupFreq() int {
 	freq := make(map[int]bool)
 	accum := 0
 	for {

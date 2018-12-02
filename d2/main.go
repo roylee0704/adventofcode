@@ -15,6 +15,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// only works w/ ascii input
 	p := newProblem(f)
 	fmt.Println(p.CheckSum())
 	fmt.Println(p.Common())

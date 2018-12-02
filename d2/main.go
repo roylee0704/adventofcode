@@ -37,30 +37,30 @@ func (p *problem) FindCheckSum() int {
 	p.input.Seek(0, 0)
 	s := bufio.NewScanner(p.input)
 
-	var checksumPartA int
-	var checksumPartB int
-
+	var twos int
+	var threes int
 	for s.Scan() {
-		frequency := make(map[int]int)
+		charFreq := make(map[int]int)
 		for _, c := range s.Text() {
-			frequency[int(c)]++
+			charFreq[int(c)]++
 		}
-
-		var enteredA bool
-		var enteredB bool
-
-		for _, v := range frequency {
-			if v == 2 && !enteredA {
-				enteredA = true
-				checksumPartA++
-			}
-			if v == 3 && !enteredB {
-				enteredB = true
-				checksumPartB++
-			}
+		if hasFreq(charFreq, 2) {
+			twos++
+		}
+		if hasFreq(charFreq, 3) {
+			threes++
 		}
 	}
-	return checksumPartB * checksumPartA
+	return twos * threes
+}
+
+func hasFreq(charFreq map[int]int, freq int) bool {
+	for _, v := range charFreq {
+		if v == freq {
+			return true
+		}
+	}
+	return false
 }
 
 func (p *problem) FindMatchedString() string {

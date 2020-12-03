@@ -1,28 +1,21 @@
 import fs from 'fs';
 
 
-function solve(matrix, right, down) {
-    const maxCol = matrix[0].length;
-    const maxRow = matrix.length;
-    let row = 0, col = 0, trees = 0;
-    while (row < maxRow - 1) {
-        col += right;
-        row += down;
-        const obj = matrix[row][col % maxCol];
-        if (obj === '#') {
-            trees++;
-        }
+function solve(matrix, dy, dx) {
+    const [n, m] = [matrix[0].length, matrix.length];
+    let x = 0, y = 0, ans = 1, curr = 0;
+    while (x < m) {
+        curr += +(matrix[x][y] === '#');
+        x += dx;
+        y += dy;
+        y %= n;
     }
-    return trees;
+    ans *= curr;
+    return ans;
 }
 
-const input = fs.readFileSync('./input.txt', 'utf8');
-const inputs = input.split('\n');
-const matrix = [];
-inputs.forEach(row => {
-    matrix.push(row.split(''))
-});
-
+const fin = fs.readFileSync('./input.txt', 'utf8');
+const matrix = [...fin.split('\n').filter(line => line.trim())]
 console.log('part 1:', solve(matrix, 3, 1));
 
 const a = solve(matrix, 1, 1);

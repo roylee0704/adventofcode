@@ -14,8 +14,8 @@ function solve(matrix, dy, dx) {
     return ans;
 }
 
-const fin = fs.readFileSync('./input.txt', 'utf8');
-const matrix = [...fin.split('\n').filter(line => line.trim())]
+const lines = fs.readFileSync('./input.txt', 'utf8');
+const matrix = [...lines.split('\n').filter(line => line.trim())]
 console.log('part 1:', solve(matrix, 3, 1));
 
 const a = solve(matrix, 1, 1);

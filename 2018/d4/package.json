@@ -1,0 +1,12 @@
+{
+  "name": "d4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "roylee0704 <roylee0704@gmail.com> (https://twitter.com/roylee0704)",
+  "license": "ISC"
+}

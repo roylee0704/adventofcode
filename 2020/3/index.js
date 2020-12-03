@@ -4,16 +4,11 @@ import fs from 'fs';
 function solve(matrix, right, down) {
     const maxCol = matrix[0].length;
     const maxRow = matrix.length;
-    let row = 0;
-    let col = 0;
-
-    let trees = 0;
+    let row = 0, col = 0, trees = 0;
     while (row < maxRow - 1) {
         col += right;
         row += down;
-
-        const newCol = col % maxCol;
-        const obj = matrix[row][newCol];
+        const obj = matrix[row][col % maxCol];
         if (obj === '#') {
             trees++;
         }
@@ -21,16 +16,14 @@ function solve(matrix, right, down) {
     return trees;
 }
 
-
-
 const input = fs.readFileSync('./input.txt', 'utf8');
 const inputs = input.split('\n');
 const matrix = [];
 inputs.forEach(row => {
     matrix.push(row.split(''))
 });
-console.log('part 1:', solve(matrix, 3, 1));
 
+console.log('part 1:', solve(matrix, 3, 1));
 
 const a = solve(matrix, 1, 1);
 const b = solve(matrix, 3, 1);

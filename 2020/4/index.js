@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-function solve(passports) {
+function solve(passports, hasConstrains) {
     const mapper = {
         byr: 2,
         iyr: 3,
@@ -23,6 +23,11 @@ function solve(passports) {
 
                 const [k, v] = kvpair.split(':');
                 if (!mapper[k]) {
+                    continue;
+                }
+
+                if (!hasConstrains) {
+                    sum += mapper[k];
                     continue;
                 }
 
@@ -73,4 +78,5 @@ const lines = fs.readFileSync('./input.txt', 'utf8');
 
 const passports = lines.split('\n\n');
 
-console.log('part 2:', solve(passports));
+console.log('part 1:', solve(passports, false));
+console.log('part 2:', solve(passports, true));

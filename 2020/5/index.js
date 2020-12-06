@@ -3,13 +3,8 @@ import fs from 'fs';
 function solve(instructions) {
 
 
-    const matrix = [];
     const seatIDs = [];
-
-    for (let i = 0; i < 128; i++) {
-        matrix[i] = new Array(8);
-    }
-
+    const matrix = [...Array(128)].map(_ => Array(8).fill(0))
 
     let maxSeatID = -1;
     for (let i = 0; i < instructions.length; i++) {
@@ -56,7 +51,6 @@ function solve(instructions) {
 
         const seatID = (row * 8) + col
 
-        // console.log(row, col, seatID);
         seatIDs.push(seatID);
         if (seatID > maxSeatID) {
             maxSeatID = seatID;
@@ -77,8 +71,6 @@ function solve(instructions) {
     }
 
     for (const seat of seatIDs) {
-
-        // console.log(seat, missingSeatIDs[String(seat - 1)], missingSeatIDs[String(seat + 1)])
         if (missingSeatIDs[String(seat - 1)]) {
             console.log('minus', seat, seat - 1)
         }
@@ -93,8 +85,6 @@ function solve(instructions) {
 }
 
 const lines = fs.readFileSync('./input.txt', 'utf8');
-
-
 
 const instructions = lines.split('\n');
 

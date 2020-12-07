@@ -12,7 +12,7 @@ function solve(lines) {
         }
     }
 
-    // dfs(recursive): pre-order
+    // dfs(recursive): pre-order w/ reverse-adjecency-list
     const holdsgold = new Set();
     function check(color) {
         for (const c of (containedin[color] ?? [])) {
@@ -23,7 +23,7 @@ function solve(lines) {
     check('shiny gold');
     console.log('part 1:', holdsgold.size)
 
-    // dfs(recursive): post-order
+    // dfs(recursive): post-order w/ adjecency-list
     function cost(color) {
         let total = 0;
         for (const [count, innerColor] of (contains[color] || [])) {

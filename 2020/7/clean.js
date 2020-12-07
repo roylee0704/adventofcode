@@ -1,14 +1,11 @@
 import fs from 'fs';
 
 function solve(lines) {
-
-    // both containedin and contains were a graph
     const containedin = {}  // reverse-adjecency-list
     const contains = {};    // adjecency-list 
 
     for (const line of lines) {
         const [_, color] = line.match(/(.+?) bags?/);
-
         for (const [_, count, innerColor] of [...line.matchAll(/(\d+) (.+?) bags?[,.]/g)]) {
             contains[color] = [[+count, innerColor], ...(contains[color] || [])];
             containedin[innerColor] = [color, ...(containedin[innerColor] || [])];
@@ -25,7 +22,6 @@ function solve(lines) {
     }
     check('shiny gold');
     console.log('part 1:', holdsgold.size)
-
 
     // dfs(recursive): post-order
     function cost(color) {

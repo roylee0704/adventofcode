@@ -3,7 +3,7 @@ import fs from 'fs';
 function solve(lines) {
 
     // both containedin and contains were a graph
-    const containedin = {}  // reverse-adjecency-list - reverse - points back to parent - bottom to up traversal
+    const containedin = {}  // reverse-adjecency-list
     const contains = {};    // adjecency-list 
 
     for (const line of lines) {
@@ -15,8 +15,8 @@ function solve(lines) {
         }
     }
 
-    const holdsgold = new Set();
     // dfs(recursive): pre-order
+    const holdsgold = new Set();
     function check(color) {
         for (const c of (containedin[color] ?? [])) {
             holdsgold.add(c);
@@ -33,11 +33,8 @@ function solve(lines) {
         for (const [count, innerColor] of (contains[color] || [])) {
             total += count + count * cost(innerColor);
         }
-
         return total;
-
     }
-
     console.log('part 2:', cost('shiny gold'));
 }
 

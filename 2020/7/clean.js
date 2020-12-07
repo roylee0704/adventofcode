@@ -3,7 +3,7 @@ import fs from 'fs';
 function solve(lines) {
 
     // both containedin and contains were a graph
-    const containedin = {}  // adjecency-list - reverse - points back to parent - bottom to up traversal
+    const containedin = {}  // reverse-adjecency-list - reverse - points back to parent - bottom to up traversal
     const contains = {};    // adjecency-list 
 
     for (const line of lines) {

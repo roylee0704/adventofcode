@@ -74,24 +74,4 @@ function part2(lines) {
 
 const lines = fs.readFileSync('./input.txt', 'utf-8').split('\n');
 console.log('part1:', part1(lines));
-
-
 console.log('part2:', part2(lines));
-
-
-
-
-
-
-
-
-/**
- *
- *   for (const line of lines) {
-        const [_, color] = line.match(/(.+?) bags?/);
-        for (const [_, count, innerColor] of [...line.matchAll(/(\d+) (.+?) bags?[,.]/g)]) {
-            contains[color] = [[+count, innerColor], ...(contains[color] || [])];
-            containedin[innerColor] = [color, ...(containedin[innerColor] || [])];
-        }
-    }
- */

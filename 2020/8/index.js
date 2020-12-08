@@ -33,7 +33,7 @@ function part2(lines) {
     while (curr < lines.length) {
         const [inst, value] = lines[curr].split(' ');
         if (seen[curr]) {
-            return -1;
+            return null;
         }
 
         seen[curr] = true;
@@ -55,21 +55,19 @@ function part2(lines) {
 
 
 const lines = fs.readFileSync('./input.txt', 'utf-8').split('\n');
-console.log('part1:', part1(lines)); // 1553
-
+console.log('part1:', part1(lines));
 
 for (let i = 0; i < lines.length; i++) {
     const l = [...lines];
     if (lines[i].startsWith('jmp')) {
         l[i] = lines[i].replace(/jmp/, 'nop');
-
     }
     if (lines[i].startsWith('nop')) {
         l[i] = lines[i].replace(/nop/, 'jmp');
     }
 
     const accum = part2(l);
-    if (accum > 0) {
+    if (accum !== null) {
         console.log('part2:', accum);
         break;
     }

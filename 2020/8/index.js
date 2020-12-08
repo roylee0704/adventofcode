@@ -1,77 +1,76 @@
 import fs from 'fs';
 
-function run(program) {
-    let curr = 1;
-    const visited = {};
-    let ans = 0;
-    let line = 1;
-
-    while (line <= Object.keys(program).length && curr <= Object.keys(program).length) {
-        const [inst, seq, l] = program[curr];
-        if (visited[curr]) {
-            return [ans, false];
-        }
-        visited[curr] = true;
-
-        if (inst === 'nop') {
-            curr++;
-            continue;
-        }
-
-        if (inst === 'acc') {
-            ans += +seq;
-            curr++;
-            continue;
-        }
-
-        if (inst === 'jmp') {
-            curr += +seq;
-            continue;
-        }
-    }
-
-    return [ans, true];
-}
-
-function parse(lines) {
-    const program = {};
-    let ptr = 1;
-    for (const line of lines) {
-        program[ptr] = [...line.split(' '), ptr];
-        ptr++;
-    }
-
-    return program;
-}
-
 function part1(lines) {
-    const program = parse(lines);
-    return run(program)[0];
-}
-
-
-function part2(lines) {
-    const program = parse(lines);
-    const [accum, finished] = run(program);
-
-    let modified = {};
-    for (const i in program) {
-        const [inst, seq, line] = program[i];
-
-        modified = { ...program };
-        if (inst === 'nop') {
-            modified[i] = ['jmp', seq, line];
-        } else if (inst === 'jmp') {
-            modified[i] = ['nop', seq, line];
-        }
-
-        const [accum, finished] = run(modified);
-        if (finished) {
+    let accum = 0;
+    let curr = 0;
+    let seen = {};
+    while (true) {
+        const [inst, value] = lines[curr].split(' ');
+        if (seen[curr]) {
             return accum;
         }
+
+        seen[curr] = true;
+        switch (inst) {
+            case 'jmp':
+                curr += +value;
+                break;
+            case 'acc':
+                accum += +value;
+                curr++;
+                break;
+            case 'nop':
+                curr++;
+                break;
+        }
     }
 }
 
+function part2(lines) {
+    let accum = 0;
+    let curr = 0;
+    let seen = {};
+    while (curr < lines.length) {
+        const [inst, value] = lines[curr].split(' ');
+        if (seen[curr]) {
+            return -1;
+        }
+
+        seen[curr] = true;
+        switch (inst) {
+            case 'jmp':
+                curr += +value;
+                break;
+            case 'acc':
+                accum += +value;
+                curr++;
+                break;
+            case 'nop':
+                curr++;
+                break;
+        }
+    }
+    return accum;
+}
+
+
 const lines = fs.readFileSync('./input.txt', 'utf-8').split('\n');
-console.log('part1:', part1(lines));
-console.log('part2:', part2(lines));
+console.log('part1:', part1(lines)); // 1553
+
+
+for (let i = 0; i < lines.length; i++) {
+    const l = [...lines];
+    if (lines[i].startsWith('jmp')) {
+        l[i] = lines[i].replace(/jmp/, 'nop');
+
+    }
+    if (lines[i].startsWith('nop')) {
+        l[i] = lines[i].replace(/nop/, 'jmp');
+    }
+
+    const accum = part2(l);
+    if (accum > 0) {
+        console.log('part2:', accum);
+        break;
+    }
+}

@@ -26,17 +26,16 @@ function part1(inputs, preamble) {
 
 // O(N) time || O(1) space
 function part2(inputs, target) {
-    let start = 0, curr = 2, sum = inputs[0] + inputs[1];
-
-    while (curr - start >= 2 && curr < inputs.length) {
-        sum += inputs[curr];
+    let start = 0, end = 2, sum = inputs[0] + inputs[1];
+    while (end - start >= 2 && end < inputs.length) {
+        sum += inputs[end];
         while (sum > target) {
             sum -= inputs[start++];
         }
         if (sum === target) {
-            return Math.min(...inputs.slice(start, curr + 1)) + Math.max(...inputs.slice(start, curr + 1));
+            return Math.min(...inputs.slice(start, end + 1)) + Math.max(...inputs.slice(start, end + 1));
         }
-        curr++;
+        end++;
     }
 }
 

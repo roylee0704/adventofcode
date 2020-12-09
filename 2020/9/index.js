@@ -25,14 +25,14 @@ function part1(inputs, preamble) {
 
 function part2(inputs, target) {
     let start = 0, curr = 2;
-    let runningSum = inputs[0] + inputs[1];
+    let partSum = inputs[0] + inputs[1];
     while (curr - start >= 2 && curr < inputs.length) {
-        runningSum += inputs[curr];
-        while (runningSum > target) {
-            runningSum -= inputs[start];
+        partSum += inputs[curr];
+        while (partSum > target) {
+            partSum -= inputs[start];
             start++;
         }
-        if (runningSum === target) {
+        if (partSum === target) {
             return Math.min(...inputs.slice(start, curr + 1)) + Math.max(...inputs.slice(start, curr + 1));
         }
         curr++;

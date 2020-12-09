@@ -24,14 +24,14 @@ function part1(inputs, preamble) {
 }
 
 function part2(inputs, target) {
-    let start = 0, curr = 2;
-    let partSum = inputs[0] + inputs[1];
+    let start = 0, curr = 2, sum = inputs[0] + inputs[1];
+
     while (curr - start >= 2 && curr < inputs.length) {
-        partSum += inputs[curr];
-        while (partSum > target) {
-            partSum -= inputs[start++];
+        sum += inputs[curr];
+        while (sum > target) {
+            sum -= inputs[start++];
         }
-        if (partSum === target) {
+        if (sum === target) {
             return Math.min(...inputs.slice(start, curr + 1)) + Math.max(...inputs.slice(start, curr + 1));
         }
         curr++;

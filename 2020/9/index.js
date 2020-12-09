@@ -15,6 +15,7 @@ function issumoftwo(nums, target) {
     return false;
 }
 
+// O(N^2) time || O(1) space
 function part1(inputs, preamble) {
     for (let i = preamble; i < inputs.length; i++) {
         if (!issumoftwo(inputs.slice(i - preamble, i), inputs[i])) {
@@ -23,6 +24,7 @@ function part1(inputs, preamble) {
     }
 }
 
+// O(N) time || O(1) space
 function part2(inputs, target) {
     let start = 0, curr = 2, sum = inputs[0] + inputs[1];
 

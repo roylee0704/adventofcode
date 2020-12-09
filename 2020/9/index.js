@@ -29,8 +29,7 @@ function part2(inputs, target) {
     while (curr - start >= 2 && curr < inputs.length) {
         partSum += inputs[curr];
         while (partSum > target) {
-            partSum -= inputs[start];
-            start++;
+            partSum -= inputs[start++];
         }
         if (partSum === target) {
             return Math.min(...inputs.slice(start, curr + 1)) + Math.max(...inputs.slice(start, curr + 1));

@@ -17,25 +17,25 @@ function part2(nums) {
         prev = nums[i++];
     }
 
-    const cache = { [Math.min(...nums)]: 1 };
     nums.reverse();
     nums.push(0);
-    nums.slice(1).forEach(num => {
-        cache[num] = chain[num].reduce((accum, ptr) => accum + (cache[String(ptr)] >= 0 ? cache[String(ptr)] : 0), 0);
-    });
+    const memo = nums.slice(1).reduce((memo, num) => {
+        memo[num] = chain[num].reduce((accum, i) => accum + (memo[i] >= 0 ? memo[i] : 0), 0);
+        return memo;
+    }, { [Math.max(...nums)]: 1 });
 
-    return cache[0];
+    return memo[0];
 }
 
 function part1(nums) {
-    const [_, j1, j3] = nums.sort((a, b) => a - b).reduce(([prev, j1, j3], num) => {
-        return [num, j1 += +(num - prev === 1), j3 += +(num - prev === 3)];
+    const [_, ones, threes] = nums.sort((a, b) => a - b).reduce(([prev, ones, threes], num) => {
+        return [num, ones += +(num - prev === 1), threes += +(num - prev === 3)];
     }, [0, 0, 0])
-    return j1 * (j3 + 1);
+    return ones * (threes + 1);
 }
 
 
-const nums = fs.readFileSync('./input.txt', 'utf-8').split('\n').map(line => +line);
+const nums = fs.readFileSync('./input.txt', 'utf-8').split('\n');
 
 console.log('part1:', part1(nums));
 console.time("runtime(part2)");

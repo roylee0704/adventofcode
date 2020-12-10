@@ -1,9 +1,11 @@
 import fs from 'fs';
 
 function part2(nums) {
+    nums.push(0);
+    nums.push(Math.max(...nums) + 3);
     nums.sort((a, b) => a - b);
-    let prev = 0, i = 0;
 
+    let prev = 0, i = 0;
     const adapters = {}; // adjacency list
     while (i < nums.length) {
         let x = i;
@@ -13,9 +15,7 @@ function part2(nums) {
         prev = nums[i++];
     }
 
-    nums.reverse();
-    nums.push(0);
-    const memo = nums.slice(1).reduce((memo, num) => {
+    const memo = nums.reverse().slice(1).reduce((memo, num) => {
         memo[num] = adapters[num].reduce((accum, i) => accum + (memo[i] >= 0 ? memo[i] : 0), 0);
         return memo;
     }, { [Math.max(...nums)]: 1 });

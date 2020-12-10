@@ -25,7 +25,7 @@ function part2(nums) {
 
 function part1(nums) {
     const [_, ones, threes] = nums.sort((a, b) => a - b).reduce(([prev, ones, threes], num) => {
-        return [num, ones += +(num - prev === 1), threes += +(num - prev === 3)];
+        return [num, ones += +((num - prev) === 1), threes += +((num - prev) === 3)];
     }, [0, 0, 0])
     return ones * (threes + 1);
 }

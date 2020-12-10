@@ -2,25 +2,21 @@ import fs from 'fs';
 
 function part2(nums) {
     nums.sort((a, b) => a - b);
-    let prev = 0;
-    let i = 0;
+    let prev = 0, i = 0;
 
-    const chain = {};
+    const graph = {};
     while (i < nums.length) {
-        let innerPrev = prev;
-        let ptr = i;
-
-        while ((nums[ptr] - prev) <= 3) {
-            chain[innerPrev] = [nums[ptr++], ...[...chain[innerPrev] || []]]
+        let x = i;
+        while ((nums[x] - prev) <= 3) {
+            graph[prev] = [nums[x++], ...[...graph[prev] || []]]
         }
-
         prev = nums[i++];
     }
 
     nums.reverse();
     nums.push(0);
     const memo = nums.slice(1).reduce((memo, num) => {
-        memo[num] = chain[num].reduce((accum, i) => accum + (memo[i] >= 0 ? memo[i] : 0), 0);
+        memo[num] = graph[num].reduce((accum, i) => accum + (memo[i] >= 0 ? memo[i] : 0), 0);
         return memo;
     }, { [Math.max(...nums)]: 1 });
 

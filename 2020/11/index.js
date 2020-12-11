@@ -28,9 +28,7 @@ function solve(grid) {
                     ) {
                         let ch = grid[row + i * dx][col + i * dy];
                         if (ch != '.') {
-                            if (ch === '#') {
-                                adj.push(ch);
-                            }
+                            adj.push(ch);
                             break;
                         }
                         i++

@@ -11,9 +11,29 @@ function solve(grid) {
                     if (dx === 0 && dy === 0) {
                         continue;
                     }
-                    // work within the boundary
-                    if (row + dx >= 0 && row + dx < grid.length && col + dy >= 0 && col + dy < grid[0].length && grid[row + dx][col + dy] === '#') {
-                        adj.push('#');
+                    // comment: part1
+                    // if (
+                    //     0 <= row + dx && row + dx < grid.length &&
+                    //     0 <= col + dy && col + dy < grid[0].length
+                    // ) {
+                    //     adj.push(grid[row + dx][col + dy]);
+                    // }
+
+
+                    // part2
+                    let i = 1;
+                    while (
+                        0 <= row + i * dx && row + i * dx < grid.length &&
+                        0 <= col + i * dy && col + i * dy < grid[0].length
+                    ) {
+                        let ch = grid[row + i * dx][col + i * dy];
+                        if (ch != '.') {
+                            if (ch === '#') {
+                                adj.push(ch);
+                            }
+                            break;
+                        }
+                        i++
                     }
                 }
             }
@@ -21,9 +41,16 @@ function solve(grid) {
             if (grid[row][col] === 'L' && !adj.includes('#')) {
                 newRow += '#';
             }
-            else if (grid[row][col] === '#' && adj.length >= 4) {
+
+            // comment: part1
+            // else if (grid[row][col] === '#' && adj.filter(ch => ch === '#').length >= 4) {
+            //     newRow += 'L';
+            // }
+            else if (grid[row][col] === '#' && adj.filter(ch => ch === '#').length >= 5) {
                 newRow += 'L';
-            } else {
+            }
+
+            else {
                 newRow += grid[row][col];
             }
 
@@ -34,10 +61,9 @@ function solve(grid) {
 }
 
 let grid = fs.readFileSync('./input.txt', 'utf-8').split('\n');
+
 while (true) {
     const nextGrid = solve(grid);
-
-    console.log(nextGrid.join(''), 'hehe');
     if (nextGrid.join('') === grid.join('')) {
         console.log(nextGrid.join('').split('').filter(rc => rc === '#').length)
         break;

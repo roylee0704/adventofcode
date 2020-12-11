@@ -63,7 +63,7 @@ let grid = fs.readFileSync('./input.txt', 'utf-8').split('\n');
 while (true) {
     const nextGrid = solve(grid);
     if (nextGrid.join('') === grid.join('')) {
-        console.log(nextGrid.join('').split('').filter(rc => rc === '#').length)
+        console.log(nextGrid.join('').split('').filter(ch => ch === '#').length)
         break;
     }
 

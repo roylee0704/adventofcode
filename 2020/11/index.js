@@ -34,39 +34,30 @@ function part2(seats) {
 
 function countAdjacents(seats, row, col, formula) {
     let count = 0;
-    count += formula(seats, row, col, 0, 1, 0, 0);    // left
-    count += formula(seats, row, col, 0, 0, 0, 1);    // right
-    count += formula(seats, row, col, 0, 0, 1, 0);    // bottom
-    count += formula(seats, row, col, 0, 0, 1, 1);    // right bottom
-    count += formula(seats, row, col, 0, 1, 1, 0);    // left bottom
-    count += formula(seats, row, col, 1, 0, 0, 0);    // top
-    count += formula(seats, row, col, 1, 1, 0, 0);    // left top
-    count += formula(seats, row, col, 1, 0, 0, 1);    // right top
+    [-1, 0, 1].forEach(up =>
+        [-1, 0, 1].forEach(down => {
+            if (up !== 0 || down !== 0) {
+                count += formula(seats, row, col, up, down);
+            }
+        })
+    )
     return count;
 }
 
 
-function isOccupied(seats, row, col, top, left, bottom, right) {
-    let dRow = row;
-    let dCol = col;
-    dRow += top ? -1 : 0;
-    dRow += bottom ? +1 : 0;
-    dCol += left ? -1 : 0;
-    dCol += right ? +1 : 0;
+function isOccupied(seats, row, col, up, down) {
+    let dRow = row + up;
+    let dCol = col + down;
+
     if (dRow < 0 || dCol < 0 || dRow >= seats.length || dCol >= seats[0].length) {
         return 0;
     }
     return seats[dRow][dCol] === '#' ? 1 : 0 ?? 0;
 }
 
-function isOccupiedGreedy(seats, row, col, top, left, bottom, right) {
-    let dRow = row;
-    let dCol = col;
-
-    dRow += top ? -1 : 0;
-    dRow += bottom ? +1 : 0;
-    dCol += left ? -1 : 0;
-    dCol += right ? +1 : 0;
+function isOccupiedGreedy(seats, row, col, up, down) {
+    let dRow = row + up;
+    let dCol = col + down;
 
     if (dRow < 0 || dCol < 0 || dRow >= seats.length || dCol >= seats[0].length) {
         return 0;
@@ -77,7 +68,7 @@ function isOccupiedGreedy(seats, row, col, top, left, bottom, right) {
     if (seats[dRow][dCol] === 'L') {
         return 0;
     }
-    return isOccupiedGreedy(seats, dRow, dCol, top, left, bottom, right);
+    return isOccupiedGreedy(seats, dRow, dCol, up, down);
 }
 
 function isEqual(m1, m2) {

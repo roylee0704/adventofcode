@@ -1,12 +1,12 @@
 import fs from 'fs';
 
-function solve(lines) {
+function solve(nums) {
     const spoken = {};
     let last = 0;
     let turn = 0;
-    for (let i = 0; i < lines.length; i++) {
-        spoken[lines[i]] = [i + 1];
-        last = lines[i];
+    for (let i = 0; i < nums.length; i++) {
+        spoken[nums[i]] = [i + 1];
+        last = nums[i];
         turn++;
     }
 
@@ -27,5 +27,5 @@ function solve(lines) {
     console.log('last spoken:', last)
 }
 
-let lines = fs.readFileSync('./input.txt', 'utf-8').split(',');
-solve(lines);
+let nums = fs.readFileSync('./input.txt', 'utf-8').split(',');
+solve(nums);
